@@ -44,12 +44,12 @@ def Calibrate(images_folder: str, cb: ChessBoard, mode="normal"):
         h, w, _ = image.shape
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # remove channels
 
-        # append 3D points
-        world_points.append(wps)
-
         # get corners and append
         _, corners = cv2.findChessboardCorners(gray, (cb.col, cb.row), None)  # corner: N,1,2
-        image_points.append(corners)
+        if corners is not None:
+            image_points.append(corners)
+            # append 3D points
+            world_points.append(wps)
 
         # error
         if len(world_points[0]) != len(image_points[0]):
@@ -89,7 +89,7 @@ def Calibrate(images_folder: str, cb: ChessBoard, mode="normal"):
 if __name__ == '__main__':
     cb = ChessBoard(9, 6, 10)  # chess board: col, row, width(mm)
 
-    mode = "normal"
-    # mode = "fisheye
+    # mode = "normal"
+    mode = "fisheye"
 
     Calibrate("./Data", cb, mode)
