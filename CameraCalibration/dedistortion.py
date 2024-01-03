@@ -15,7 +15,7 @@ def dedistortion(image, camera_mode, size):
         new_matrix, _ = cv2.getOptimalNewCameraMatrix(camera_matrix, distortion_coefficient,
                                                       size, 0, size,
                                                       centerPrincipalPoint=False)
-        # dedistort
+        # dedistortion
         mapX, mapY = cv2.initUndistortRectifyMap(camera_matrix, distortion_coefficient, None, new_matrix, size, 5)
         dedistorted_image = cv2.remap(image, mapX, mapY, cv2.INTER_LINEAR)
 
